@@ -1,0 +1,32 @@
+const int ldrPin = A0;
+const int pirPin = 2;
+const int ledPin = 9;
+
+int ldrValue = 0;
+int pirState = 0;
+int darkThreshold = 450;
+
+void setup() {
+  pinMode(pirPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+  delay(2000);
+}
+
+void loop() {
+  ldrValue = analogRead(ldrPin);
+  pirState = digitalRead(pirPin);
+
+  Serial.print("LDR: ");
+  Serial.print(ldrValue);
+  Serial.print(" | PIR: ");
+  Serial.println(pirState);
+
+  if (ldrValue < darkThreshold && pirState == HIGH) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(200);
+}
